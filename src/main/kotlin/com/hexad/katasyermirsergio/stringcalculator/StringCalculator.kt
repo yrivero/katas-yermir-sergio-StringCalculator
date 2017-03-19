@@ -39,8 +39,18 @@ class StringCalculator {
     }
 
     private fun sumNumbers(input : List<Int>) : Int{
-        return input.reduce { sum, number -> sum + number }
+        return input.reduce { sumTotal, number -> sum(sumTotal,number) }
     }
+
+    private fun sum(sumTotal: Int, number: Int): Int {
+       if(number > 1000){
+           return sumTotal
+       }
+       else{
+           return sumTotal + number
+       }
+    }
+
 
     private fun parseInputData(input: String): Array<String> {
         if (input.startsWith("//")) {
