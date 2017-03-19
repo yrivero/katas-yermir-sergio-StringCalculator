@@ -1,5 +1,7 @@
 package com.hexad.katasyermirsergio.stringcalculator
 
+import java.util.regex.Pattern
+
 class StringCalculator {
 
     fun add(input: String): Int {
@@ -76,11 +78,36 @@ class StringCalculator {
             return "\\Q" + delimiterToken + "\\E"
         }
         else {
-            // Long delimiter format
-            var delimiterToken  = altDelimSpec.substring(2)
-            delimiterToken = delimiterToken.substring(1, delimiterToken.length - 1)
-            return "\\Q" + delimiterToken + "\\E"
+            return buildSplittingRegexForLongDelimiterFormat(altDelimSpec)
         }
+    }
+
+    private fun buildSplittingRegexForLongDelimiterFormat(altDelimSpec: String): String {
+        // Long delimiter format
+
+        //   ".*?" lazy
+        //   ".*" greedy, eager
+        var pattern = Pattern.compile("\\[" + "(.*?)" + "\\]")
+        var matcher = pattern.matcher(altDelimSpec)
+
+        var splittingRegex = StringBuilder()
+
+        var delimiterToken = ""
+        while (matcher.find()){
+            delimiterToken = matcher.group(1)
+            //if the delimiter is an empty string we can ignore it
+            if(delimiterToken.isEmpty()){
+                continue
+            }
+
+            if(splittingRegex.length > 0){
+                splittingRegex.append("|")
+            }
+
+            splittingRegex.append("\\Q" + delimiterToken + "\\E")
+        }
+
+        return splittingRegex.toString()
     }
 
     private fun decomposeInputString(input: String): Array<String?> {
