@@ -60,6 +60,14 @@ class StringCalculatorTest {
                 55)
     }
 
+    @Test
+    fun numbersAbove1000AreIgnored() {
+        assertResultEquals(
+                "Numbers above 1000 are ignored",
+                "1000,1001",
+                1000)
+    }
+
     private fun assertResultEquals(message : String, input : String, expectedResult : Int) {
         val result = calculator?.add(input)
         assertEquals(message, expectedResult, result)
