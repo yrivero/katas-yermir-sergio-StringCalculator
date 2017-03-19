@@ -7,23 +7,27 @@ class StringCalculator {
             return 0
         }
 
-        var inputData : Array<String> = parseInputData(input)
-        val numberList = inputData[1]
-        val splittingRegex = inputData[0]
-
-        val numbers : List<Int> = parseNumbers(numberList, splittingRegex)
+        val numbers: List<Int> = parseInput(input)
         val result = sumNumbers(numbers)
 
         return result
     }
 
+    private fun parseInput(input: String): List<Int> {
+        var inputData: Array<String> = parseInputData(input)
+        val numberList = inputData[1]
+        val splittingRegex = inputData[0]
 
-    fun parseNumbers(input : String, splittingRegex : String) : List<Int>{
+        val numbers: List<Int> = parseNumbers(numberList, splittingRegex)
+        return numbers
+    }
+
+    private fun parseNumbers(input : String, splittingRegex : String) : List<Int>{
         val numbers : List<String> = input.split(Regex(splittingRegex))
         return numbers.map { x -> x.toInt()}
     }
 
-    fun sumNumbers(input : List<Int>) : Int{
+    private fun sumNumbers(input : List<Int>) : Int{
         return input.reduce { sum, number -> sum + number }
     }
 
@@ -40,7 +44,5 @@ class StringCalculator {
             return arrayOf(",|\n", input)
         }
     }
-
-
 
 }
