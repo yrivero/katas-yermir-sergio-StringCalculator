@@ -51,6 +51,15 @@ class StringCalculatorTest {
                 55)
     }
 
+    @Test(expected = StringCalculator.NegativeNumberException::class)
+    fun negativeNumbersThrowAnException() {
+        assertResultEquals(
+                "When the number list contains some negative number(s) the add operation will throw an exception",
+                "//;\n" +
+                        "1;2;-3;4;5;6;7;8;-9;10",
+                55)
+    }
+
     private fun assertResultEquals(message : String, input : String, expectedResult : Int) {
         val result = calculator?.add(input)
         assertEquals(message, expectedResult, result)
