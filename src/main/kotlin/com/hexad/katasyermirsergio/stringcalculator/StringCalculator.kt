@@ -67,13 +67,18 @@ class StringCalculator {
 
     private fun buildSplittingRegex(altDelimSpec: String?): String {
         if (altDelimSpec == null) {
+            // No spec. Standard delimiters
             return ",|\n"
-        } else {
+        }
+        else if (altDelimSpec.startsWith("//") && !altDelimSpec.startsWith("//[")) {
+            // Simple format
             var delimiterToken  = altDelimSpec.substring(2)
-            if (delimiterToken.startsWith("[") && delimiterToken.endsWith("]")) {
-                delimiterToken = delimiterToken.substring(1, delimiterToken.length - 1)
-            }
-
+            return "\\Q" + delimiterToken + "\\E"
+        }
+        else {
+            // Long delimiter format
+            var delimiterToken  = altDelimSpec.substring(2)
+            delimiterToken = delimiterToken.substring(1, delimiterToken.length - 1)
             return "\\Q" + delimiterToken + "\\E"
         }
     }
