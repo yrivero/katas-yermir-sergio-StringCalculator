@@ -68,21 +68,36 @@ class StringCalculator {
     }
 
     private fun buildSplittingRegex(altDelimSpec: String?): String {
-        if (altDelimSpec == null) {
+        if (isStandardDelimitersSpec(altDelimSpec)) {
             // No spec. Standard delimiters
-            return ",|\n"
+            return buildStandardSplittingRegex()
         }
-        else if (altDelimSpec.startsWith("//") && !altDelimSpec.startsWith("//[")) {
-            // Simple format
-            var delimiterToken  = altDelimSpec.substring(2)
-            return "\\Q" + delimiterToken + "\\E"
+        else if (isSimpleDelimiterFormatDelimSpec(altDelimSpec)) {
+            return buildSplittingRegexForSimpleDelimiterFormat(altDelimSpec)
         }
         else {
             return buildSplittingRegexForLongDelimiterFormat(altDelimSpec)
         }
     }
 
-    private fun buildSplittingRegexForLongDelimiterFormat(altDelimSpec: String): String {
+
+    private fun isStandardDelimitersSpec(altDelimSpec: String?) = altDelimSpec == null
+
+    private fun buildStandardSplittingRegex(): String {
+        return ",|\n"
+    }
+
+    private fun isSimpleDelimiterFormatDelimSpec(altDelimSpec: String?) : Boolean {
+        return altDelimSpec!=null && altDelimSpec.startsWith("//") && !altDelimSpec.startsWith("//[")
+    }
+
+    private fun buildSplittingRegexForSimpleDelimiterFormat(altDelimSpec: String?): String {
+        // Simple format
+        var delimiterToken = altDelimSpec!!.substring(2)
+        return "\\Q" + delimiterToken + "\\E"
+    }
+
+    private fun buildSplittingRegexForLongDelimiterFormat(altDelimSpec: String?): String {
         // Long delimiter format
 
         //   ".*?" lazy
