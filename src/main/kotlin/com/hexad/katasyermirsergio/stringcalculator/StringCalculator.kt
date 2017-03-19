@@ -6,7 +6,14 @@ class StringCalculator {
         if(input.isEmpty()){
             return 0
         }
-        return input.toInt()
+
+        val numbers : List<String> = input.split(",")
+
+        val totalSum : Int = numbers
+                        .map { x -> x.toInt()}
+                        .reduce { sum, number -> sum + number }
+
+        return totalSum
     }
 
 }
