@@ -18,13 +18,24 @@ class StringCalculator {
         val numberList = inputData[1]
         val splittingRegex = inputData[0]
 
+
         val numbers: List<Int> = parseNumbers(numberList, splittingRegex)
         return numbers
     }
 
     private fun parseNumbers(input : String, splittingRegex : String) : List<Int>{
         val numbers : List<String> = input.split(Regex(splittingRegex))
-        return numbers.map { x -> x.toInt()}
+        return numbers.map { x -> parseValidNumber(x)}
+    }
+
+    private fun parseValidNumber(x: String): Int {
+        val intNumber = x.toInt()
+
+        if (intNumber < 0) {
+            throw NegativeNumberException("The number can't be negative : " + intNumber)
+        } else {
+            return intNumber
+        }
     }
 
     private fun sumNumbers(input : List<Int>) : Int{
@@ -44,5 +55,7 @@ class StringCalculator {
             return arrayOf(",|\n", input)
         }
     }
+
+    class NegativeNumberException(message: String) : IllegalArgumentException(message)
 
 }
