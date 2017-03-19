@@ -42,6 +42,15 @@ class StringCalculatorTest {
         assertResultEquals("When adding N numbers separated with comma or new line the result must be their sum", "1\n2,3\n4,5\n6,7\n8,9\n10", 55)
     }
 
+    @Test
+    fun canDefineANewDelimiterToSeparateTheNumbers() {
+        assertResultEquals(
+                "When changing the delimiter the numbers are separated using it",
+                "//;\n" +
+                    "1;2;3;4;5;6;7;8;9;10",
+                55)
+    }
+
     private fun assertResultEquals(message : String, input : String, expectedResult : Int) {
         val result = calculator?.add(input)
         assertEquals(message, expectedResult, result)
