@@ -53,16 +53,42 @@ class StringCalculator {
 
 
     private fun parseInputData(input: String): Array<String> {
+
+        val decomposedInputString: Array<String?> = decomposeInputString(input)
+
+        val altDelimSpec = decomposedInputString[0]
+        val numberList = decomposedInputString[1]
+
+        val splittingRegex = buildSplittingRegex(altDelimSpec)
+
+        return arrayOf(splittingRegex, numberList!!)
+
+    }
+
+    private fun buildSplittingRegex(altDelimSpec: String?): String {
+        if (altDelimSpec == null) {
+            return ",|\n"
+        } else {
+            var delimiterToken  = altDelimSpec.substring(2)
+            if (delimiterToken.startsWith("[") && delimiterToken.endsWith("]")) {
+                delimiterToken = delimiterToken.substring(1, delimiterToken.length - 1)
+            }
+
+            return "\\Q" + delimiterToken + "\\E"
+        }
+    }
+
+    private fun decomposeInputString(input: String): Array<String?> {
         if (input.startsWith("//")) {
             val newLinePos = input.indexOf("\n")
-            val delimiter = input.substring(2, newLinePos)
 
+            val altDelimSpec = input.substring(0, newLinePos)
             val numberList = input.substring(newLinePos+1)
 
-            return arrayOf(delimiter, numberList)
+            return arrayOf(altDelimSpec, numberList)
         }
         else {
-            return arrayOf(",|\n", input)
+            return arrayOf(null, input)
         }
     }
 

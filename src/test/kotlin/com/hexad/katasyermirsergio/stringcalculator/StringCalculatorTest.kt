@@ -82,11 +82,6 @@ class StringCalculatorTest {
         assertEquals(message, expectedResult, result)
     }
 
-    /*
-        pending bugs:
-            If the delimiter contains special regex caracters, the parsing is corrupted
-     */
-
 }
 
 
