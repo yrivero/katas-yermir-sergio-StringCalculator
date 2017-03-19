@@ -7,7 +7,7 @@ class StringCalculator {
             return 0
         }
 
-        val numbers : List<String> = input.split(",")
+        val numbers : List<String> = input.split(Regex(",|\n"))
 
         val totalSum : Int = numbers
                         .map { x -> x.toInt()}
