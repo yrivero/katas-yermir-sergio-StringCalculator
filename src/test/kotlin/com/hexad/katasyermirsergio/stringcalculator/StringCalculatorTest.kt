@@ -27,6 +27,12 @@ class StringCalculatorTest {
         assertResultEquals("When adding a single number the result must be that number", "1", 1)
     }
 
+    @Test
+    fun whenAddingTwoNumbersMustReturnTheirSum() {
+        assertResultEquals("When adding two numbers the result must be their sum", "1,2", 3)
+    }
+
+
     private fun assertResultEquals(message : String, input : String, expectedResult : Int) {
         val result = calculator?.add(input)
         assertEquals(message, expectedResult, result)
