@@ -3,28 +3,34 @@ package com.hexad.katasyermirsergio.stringcalculator
 import org.junit.Test
 
 import org.junit.Assert.*
-
+import org.junit.Before
 class StringCalculatorTest {
+
+    var calculator : StringCalculator? = null
+
+    @Before
+    fun setup(){
+        calculator = StringCalculator()
+    }
 
     @Test
     fun canCreateInstanceOfStringCalculator() {
-        StringCalculator()
     }
 
     @Test
     fun whenAddingEmptyStringMustReturn0() {
-        val calculator = StringCalculator()
-        val result = calculator.add("")
-
-        assertEquals("When adding empty string the result must be zero", 0, result)
+        assertResultEquals("When adding empty string the result must be zero", "", 0)
     }
 
     @Test
     fun whenAddingASingleNumberMustReturnThatNumber() {
-        val calculator = StringCalculator()
-        val result = calculator.add("1")
+        assertResultEquals("When adding a single number the result must be that number", "1", 1)
+    }
 
-        assertEquals("When adding a single number the result must be that number", 1, result)
+    private fun assertResultEquals(message : String, input : String, expectedResult : Int) {
+        val result = calculator?.add(input)
+        assertEquals(message, expectedResult, result)
     }
 }
+
 
