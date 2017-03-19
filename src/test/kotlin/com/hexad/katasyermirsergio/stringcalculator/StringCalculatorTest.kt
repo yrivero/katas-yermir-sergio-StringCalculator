@@ -68,10 +68,25 @@ class StringCalculatorTest {
                 1000)
     }
 
+    @Test
+    fun theAlternativeDelimiterSpecificationAllowsDefiningLongDelimiters() {
+        assertResultEquals(
+                "The alternative delimiter specification allows defining long delimiters",
+                "//[***]\n" +
+                        "1***2***3***4***5***6***7***8***9***10",
+                55)
+    }
+
     private fun assertResultEquals(message : String, input : String, expectedResult : Int) {
         val result = calculator?.add(input)
         assertEquals(message, expectedResult, result)
     }
+
+    /*
+        pending bugs:
+            If the delimiter contains special regex caracters, the parsing is corrupted
+     */
+
 }
 
 
